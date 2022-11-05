@@ -14,10 +14,6 @@
 
 <main>
     <h1>{title}</h1>
-
-    <div id="thumbnail_img_box">
-        <img id="thumbnail_img" src="{thumbnailURL}" alt="">
-    </div>
     
     <section>
         {@html contents}
@@ -25,12 +21,4 @@
 </main>
 
 <style>
-    #thumbnail_img_box {
-        width: 100%;
-        text-align: center;
-    }
-    #thumbnail_img {
-        max-width: 80%;
-        margin: 0 auto;
-    }
 </style>

@@ -2,16 +2,19 @@ import { error } from '@sveltejs/kit';
 
 export async function load({ params }) {
     const domain = import.meta.env.VITE_WP_DOMAIN;
-    const post = await fetch(`https://${domain}/wp-json/wp/v2/posts/`)
-        .then((response) => response.json())
+    const [post, page] = await fetch(`https://${domain}/wp-json/wp/v2/posts/`)
+        .then((response) => {
+            return [response.json(), response.headers.get('x-wp-totalpages')];
+        })
         .catch((error) => {
             console.log(error);
             return [];
         });
 
-    if (post) {
+    if (post && page) {
         return {
-            post
+            post,
+            page
         };
     }
 
