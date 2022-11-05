@@ -1,0 +1,24 @@
+version: "3"
+services:
+  front:
+    container_name: svelte_hobby_blog
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 5173:5173
+      - '24678:24678'
+    volumes:
+      - .:/svelte_hobby_blog
+    working_dir: /svelte_hobby_blog
+    tty: true
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - app
+    restart: always
+
+networks:
+  app:
+    driver: bridge
