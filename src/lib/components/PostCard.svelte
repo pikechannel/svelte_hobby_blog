@@ -45,7 +45,7 @@
 --------------------------------------*/
 	.l-wrapper_01 {
 		margin: 1rem auto;
-		width: 465px;
+		max-width: 465px;
 	}
 
 	.l-wrapper_01:hover {

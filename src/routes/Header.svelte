@@ -1,64 +1,44 @@
 <script>
 	import { page } from "$app/stores";
-	import logo from "$lib/images/svelte-logo.svg";
-	import github from "$lib/images/github.svg";
 
-    export let data;
-    console.log(data)
+	export let data;
+	console.log(data);
 
-	let categories=[]
-    const domain = import.meta.env.VITE_WP_DOMAIN;
+	let categories = [];
+	const domain = import.meta.env.VITE_WP_DOMAIN;
 	fetch(`https://${domain}/wp-json/wp/v2/categories/`)
 		.then((response) => response.json())
 		.then((data) => {
-			categories = data
-		}
-		) 
+			categories = data;
+		})
 		.catch((error) => {
 			console.log(error);
 			return [];
-		})
-
+		});
 </script>
 
 <header>
-	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
-		</a>
-	</div>
-
 	<nav>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg>
 		<ul>
-            <li class:active={$page.url.pathname === "/about"}>
-                <a href="/">ホーム</a>
-            </li>
+			<li class:active={$page.url.pathname === "/about"}>
+				<a href="/">ホーム</a>
+			</li>
 			{#each categories as category}
 				<li class:active={$page.url.pathname === "/about"}>
-					<a data-sveltekit-reload href="/blog/category/{category.id}">{category.name}</a>
+					<a data-sveltekit-reload href="/blog/category/{category.id}"
+						>{category.name}</a
+					>
 				</li>
 			{/each}
 		</ul>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg>
 	</nav>
-
-	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
-			<img src={github} alt="GitHub" />
-		</a>
-	</div>
 </header>
 
 <style>
-	header {
+	/* header {
 		display: flex;
 		justify-content: space-between;
-	}
+	} */
 
 	.corner {
 		width: 3em;
@@ -80,15 +60,10 @@
 	}
 
 	nav {
-		display: flex;
-		justify-content: center;
+		/* display: flex;
+		justify-content: center; */
 		--background: rgba(255, 255, 255, 0.7);
-	}
-
-	svg {
-		width: 2em;
-		height: 3em;
-		display: block;
+		overflow-x: auto;
 	}
 
 	path {
@@ -96,21 +71,24 @@
 	}
 
 	ul {
-		position: relative;
-		padding: 0;
-		margin: 0;
-		height: 3em;
 		display: flex;
-		justify-content: center;
-		align-items: center;
-		list-style: none;
-		background: var(--background);
-		background-size: contain;
+		width: max-content;
+		margin: 0 auto;
 	}
 
 	li {
-		position: relative;
-		height: 100%;
+		display: inline-block;
+		height: 50px;
+		padding: 0 25px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 18px;
+	}
+
+	li a {
+		text-decoration: none;
+		color: var(--color-text);
 	}
 
 	li.active::before {
@@ -125,7 +103,7 @@
 		border-top: var(--size) solid var(--color-theme-1);
 	}
 
-	nav a {
+	/* nav a {
 		display: flex;
 		height: 100%;
 		align-items: center;
@@ -137,9 +115,38 @@
 		letter-spacing: 0.1em;
 		text-decoration: none;
 		transition: color 0.2s linear;
-	}
+	} */
 
 	a:hover {
 		color: var(--color-theme-1);
 	}
+
+	/* @media screen and (max-width: 640px) {
+
+		header {
+			position: fixed;
+			width: 100vw;
+			text-align: right;
+		}
+		nav {
+			justify-content: right !important;
+			margin: 10px;
+		}
+
+		nav svg {
+			display: none;
+		}
+
+		nav a {
+			display: block;
+		}
+
+		nav li {
+			text-align: center;
+		}
+
+		ul {
+			display: block !important;
+		}
+	} */
 </style>
