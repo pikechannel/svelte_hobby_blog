@@ -1,3 +1,6 @@
+<!-- 参考 -->
+<!-- https://codepen.io/angeal185/pen/rMbMPQ -->
+
 <script>
 	export let pages;
 	export let nowPagesNum;
