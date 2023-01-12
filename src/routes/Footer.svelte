@@ -1,5 +1,9 @@
+<script>
+	const title = import.meta.env.VITE_TITLE;
+</script>
+
 <footer>
-	<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+	<p>© Copyright 2023 <a href="/">{title}</a>.</p>
 </footer>
 
 <style>
