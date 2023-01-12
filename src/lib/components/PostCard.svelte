@@ -77,7 +77,7 @@
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
 		overflow: hidden;
-		height: 50px;
+		height: 100px;
 	}
 
 	.card__thumbnail_01 {
