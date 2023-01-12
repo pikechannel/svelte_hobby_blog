@@ -35,10 +35,6 @@
 </header>
 
 <style>
-	/* header {
-		display: flex;
-		justify-content: space-between;
-	} */
 
 	.corner {
 		width: 3em;
@@ -64,6 +60,7 @@
 		justify-content: center; */
 		--background: rgba(255, 255, 255, 0.7);
 		overflow-x: auto;
+		border-bottom: solid 1px;
 	}
 
 	path {
@@ -103,50 +100,7 @@
 		border-top: var(--size) solid var(--color-theme-1);
 	}
 
-	/* nav a {
-		display: flex;
-		height: 100%;
-		align-items: center;
-		padding: 0 0.5rem;
-		color: var(--color-text);
-		font-weight: 700;
-		font-size: 0.8rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		text-decoration: none;
-		transition: color 0.2s linear;
-	} */
-
 	a:hover {
 		color: var(--color-theme-1);
 	}
-
-	/* @media screen and (max-width: 640px) {
-
-		header {
-			position: fixed;
-			width: 100vw;
-			text-align: right;
-		}
-		nav {
-			justify-content: right !important;
-			margin: 10px;
-		}
-
-		nav svg {
-			display: none;
-		}
-
-		nav a {
-			display: block;
-		}
-
-		nav li {
-			text-align: center;
-		}
-
-		ul {
-			display: block !important;
-		}
-	} */
 </style>
