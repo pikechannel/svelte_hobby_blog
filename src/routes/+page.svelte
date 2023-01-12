@@ -69,7 +69,7 @@
 		{/each}
 	</Swiper>
 	<div id="all_article_link_box">
-		<a href="/blog/page/1">全ての記事を見る</a>
+		<a href="/blog/pages/1">全ての記事を見る</a>
 	</div>
 </section>
 
