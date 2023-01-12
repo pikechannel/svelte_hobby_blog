@@ -1,10 +1,25 @@
 <script>
+	import Pagination from "$lib/components/Pagination.svelte";
+	import PostCard from "$lib/components/PostCard.svelte";
+	import BreadcrumbList from "$lib/components/BreadcrumbList.svelte"
+
 	export let data;
 	const posts = data.post;
-	
+	const nowPagesNum = data.nowPagesNum;
+
 	const pages = data.page;
-	const pageList = [...Array(Number(pages))].map((_, i) => i + 1);
-	console.log(pageList)
+
+	const breadcrumbList = [{
+		name: "ホーム",
+		path: "/"
+	},{
+		name: "ブログ",
+		path: "/blog/page/1"
+	}, {
+		name: nowPagesNum + "ページ目",
+		path: ""
+	}]
+
 	const title = import.meta.env.VITE_TITLE;
 </script>
 
@@ -14,53 +29,20 @@
 </svelte:head>
 
 <section>
-	<h1>
-		{title}
-	</h1>
-
+	<BreadcrumbList {breadcrumbList} />
 	<div id="post_box">
 		{#each posts as post}
-			<div class="l-wrapper_01">
-				<article class="card_01">
-					<div class="card__header_01">
-						<p class="card__title_01">{@html post.title.rendered}</p>
-						<figure class="card__thumbnail_01">
-							<img
-								src={post.jetpack_featured_media_url}
-								alt="サムネイル"
-								class="card__image_01"
-								height="320px"
-								style="object-fit: cover;height:300px"
-							/>
-						</figure>
-					</div>
-					<div class="card__body_01">
-						<p class="card__text2_01">
-							{@html post.yoast_head_json.og_description.replace(
-								/\s+/g,
-								""
-							)}
-						</p>
-					</div>
-					<div class="card__footer_01">
-						<p class="card__text_01">
-							<a
-								href="/blog/posts/{post.id}"
-								class="button_01 -compact"
-								>この記事を詳しく見る</a
-							>
-						</p>
-					</div>
-				</article>
-			</div>
+			<PostCard
+				title={post.title.rendered}
+				imgUrl={post.jetpack_featured_media_url}
+				description={post.yoast_head_json.og_description
+					.replace(/\s+/g, "")
+					.substr(0, 75) + "..."}
+				link="/blog/posts/{post.id}"
+			/>
 		{/each}
 	</div>
-	<div id="pagenation">
-		{#each pageList as num}
-			<span data-sveltekit-reload class="pagenation_num"><a href="/blog/pages/{num}">{num}</a></span>
-		{/each}
-	</div>
-	
+	<Pagination {pages} {nowPagesNum} />
 </section>
 
 <style>
@@ -71,6 +53,8 @@
 	#post_box {
 		display: flex;
 		flex-flow: wrap;
+		justify-content: space-around;
+		align-items: center;
 	}
 	/*--------------------------------------
   カード型_01
@@ -181,7 +165,7 @@
 	#pagenation {
 		text-align: center;
 		display: flex;
-  		justify-content: space-evenly;
+		justify-content: space-evenly;
 	}
 
 	.pagenation_num {
