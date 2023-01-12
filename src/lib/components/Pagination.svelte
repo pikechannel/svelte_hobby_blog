@@ -7,8 +7,6 @@
 	const pageList = [...Array(Number(pages))].map((_, i) => i + 1);
 
 	const pageCount = pageList.length;
-	console.log(Number(nowPagesNum) + 1);
-	console.log(pageList);
 </script>
 
 <section>
