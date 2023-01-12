@@ -1,14 +1,23 @@
 <script>
-	import Pagination  from '$lib/components/Pagination.svelte';
-	import PostCard  from '$lib/components/PostCard.svelte';
+	import logo from "$lib/images/header_logo.png";
+	// import Swiper core and required modules
+	import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper";
+
+	import { Swiper, SwiperSlide } from "swiper/svelte";
+
+	// Import Swiper styles
+	import "swiper/css";
+	import "swiper/css/navigation";
+	import "swiper/css/pagination";
+	import "swiper/css/scrollbar";
+	import "swiper/css/autoplay";
+
+	// Import Swiper styles
+	import "swiper/css";
 
 	export let data;
 	const posts = data.post;
-	
-	const pages = data.page;
 	const title = import.meta.env.VITE_TITLE;
-
-	
 </script>
 
 <svelte:head>
@@ -16,31 +25,85 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<section>
-	<h1>
-		{title}
-	</h1>
+<div class="header_logo_box">
+	<img src={logo} alt="" />
+</div>
 
-	<div id="post_box">
+<section>
+	<h1>新着記事</h1>
+	<Swiper
+		modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+		spaceBetween={10}
+		slidesPerView={5}
+		navigation
+		autoplay
+		pagination={{ clickable: true }}
+		scrollbar={{ draggable: true }}
+		breakpoints={{
+			1280: {
+			  slidesPerView: 5,
+			},
+			960: {
+			  slidesPerView: 4,
+			},
+			640:{
+			  slidesPerView: 3,
+			},
+			320:{
+			  slidesPerView: 2,
+			}
+		  }}
+	>
 		{#each posts as post}
-			<PostCard title="{post.title.rendered}" imgUrl="{post.jetpack_featured_media_url}" description="{post.yoast_head_json.og_description.replace(/\s+/g,"").substr(0, 75) + "..."}" link="/blog/posts/{post.id}" />
+			<SwiperSlide>
+				<a href="/blog/posts/{post.id}" class="swiper_link">
+					<img
+						src={post.jetpack_featured_media_url}
+						alt=""
+						height="200px"
+						class="swiper_img"
+					/>
+					<p class="img_on_title">{post.title.rendered}</p>
+				</a>
+			</SwiperSlide>
 		{/each}
+	</Swiper>
+	<div id="all_article_link_box">
+		<a href="/blog/page/1">全ての記事を見る</a>
 	</div>
-	<Pagination pages="{pages}"  />
-	
 </section>
 
 <style>
-	h1 {
-		width: 100%;
+	.header_logo_box {
 		text-align: center;
+		padding: 50px 0;
 	}
-
-	#post_box {
-		display: flex;
-		flex-flow: wrap;
-		justify-content: space-around;
-    	align-items: center;
+	.header_logo_box img{
+		max-width: 100%;
 	}
-
+	#all_article_link_box {
+		text-align: right;
+	}
+	.swiper-slide a {
+		position: relative;
+	}
+	.swiper_link {
+		position: relative;
+		width: inherit;
+	}
+	.swiper_img {
+		width: inherit;
+	}
+	.img_on_title {
+		color: black;
+		font-size: 18px;
+		text-shadow: 1px;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: inherit;
+		text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
+			1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
+			1px 0 0 #fff;
+	}
 </style>
