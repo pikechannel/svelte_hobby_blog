@@ -6,7 +6,7 @@
     <ol class="breadcrumb">
         {#each breadcrumbList as breadcrumb}
             {#if breadcrumb.path}
-                <li><a href={breadcrumb.path}>{breadcrumb.name}</a></li>
+                <li><a data-sveltekit-reload href={breadcrumb.path}>{breadcrumb.name}</a></li>
             {/if}
             {#if !breadcrumb.path}
                 <li>{breadcrumb.name}</li>
