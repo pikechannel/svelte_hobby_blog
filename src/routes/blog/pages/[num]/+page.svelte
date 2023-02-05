@@ -10,11 +10,11 @@
 	const pages = data.page;
 
 	const breadcrumbList = [{
-		name: "ホーム",
+		name: "HOME",
 		path: "/"
 	},{
 		name: "ブログ",
-		path: "/blog/page/1"
+		path: "/blog/pages/1"
 	}, {
 		name: nowPagesNum + "ページ目",
 		path: ""

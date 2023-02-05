@@ -1,7 +1,14 @@
 <script>
+	import Pagination  from '$lib/components/Pagination.svelte';
+	import PostCard  from '$lib/components/PostCard.svelte';
+
 	export let data;
-	let posts = data.post
-	let title = import.meta.env.VITE_TITLE
+	const posts = data.post;
+	
+	const pages = data.page;
+	const title = import.meta.env.VITE_TITLE;
+
+	
 </script>
 
 <svelte:head>
@@ -14,45 +21,26 @@
 		{title}
 	</h1>
 
-	<ul>
+	<div id="post_box">
 		{#each posts as post}
-		  <!-- <a href="{post.link}">
-			<li>{post.title.rendered}</li>
-		  </a> -->
-		  <a href="/blog/posts/{post.id}">
-			<li>{post.title.rendered}</li>
-		  </a>
+			<PostCard title="{post.title.rendered}" imgUrl="{post.jetpack_featured_media_url}" description="{post.yoast_head_json.og_description.replace(/\s+/g,"").substr(0, 75) + "..."}" link="/blog/posts/{post.id}" />
 		{/each}
-	  </ul>
+	</div>
+	<Pagination pages="{pages}"  />
 	
 </section>
 
 <style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
-
 	h1 {
 		width: 100%;
+		text-align: center;
 	}
 
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
+	#post_box {
+		display: flex;
+		flex-flow: wrap;
+		justify-content: space-around;
+    	align-items: center;
 	}
 
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
 </style>
