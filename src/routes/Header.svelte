@@ -34,13 +34,14 @@
 		});
 		cm["children"] = childCategories;
 	});
+
 </script>
 
 <header>
 	<nav>
 		<ul id="top_menu_list">
 			<li class:active={$page.url.pathname === "/"} class="top_menu">
-				<a href="/">HOME</a>
+				<a data-sveltekit-reload href="/">HOME</a>
 			</li>
 			{#each categoryMap as category}
 				<li
