@@ -1,6 +1,7 @@
 <script>
 	import logo from "$lib/images/header_logo.png";
 	import NewArticle from "$lib/components/NewArticle.svelte";
+	import Twitter from "$lib/components/Twitter.svelte";
 
 	export let data;
 	const categoryMap = data.categories;
@@ -45,6 +46,7 @@
 			{/each}
 		</ul>
 	</div>
+	<Twitter />
 </section>
 
 <style>
