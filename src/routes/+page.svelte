@@ -1,22 +1,21 @@
 <script>
 	import logo from "$lib/images/header_logo.png";
-	// import Swiper core and required modules
-	import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper";
-
-	import { Swiper, SwiperSlide } from "swiper/svelte";
-
-	// Import Swiper styles
-	import "swiper/css";
-	import "swiper/css/navigation";
-	import "swiper/css/pagination";
-	import "swiper/css/scrollbar";
-	import "swiper/css/autoplay";
-
-	// Import Swiper styles
-	import "swiper/css";
+	import NewArticle from "$lib/components/NewArticle.svelte";
 
 	export let data;
-	const posts = data.post;
+	const categoryMap = data.categories;
+	function compare(a, b) {
+		var r = 0;
+		if (a.id < b.id) {
+			r = -1;
+		} else if (a.id > b.id) {
+			r = 1;
+		}
+
+		return r;
+	}
+
+	categoryMap.sort(compare);
 	const title = import.meta.env.VITE_TITLE;
 </script>
 
@@ -31,79 +30,71 @@
 
 <section>
 	<h1>新着記事</h1>
-	<Swiper
-		modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-		spaceBetween={10}
-		slidesPerView={5}
-		navigation
-		autoplay
-		pagination={{ clickable: true }}
-		scrollbar={{ draggable: true }}
-		breakpoints={{
-			1280: {
-			  slidesPerView: 5,
-			},
-			960: {
-			  slidesPerView: 4,
-			},
-			640:{
-			  slidesPerView: 3,
-			},
-			320:{
-			  slidesPerView: 2,
-			}
-		  }}
-	>
-		{#each posts as post}
-			<SwiperSlide>
-				<a href="/blog/posts/{post.id}" class="swiper_link">
-					<img
-						src={post.jetpack_featured_media_url}
-						alt=""
-						height="200px"
-						class="swiper_img"
-					/>
-					<p class="img_on_title">{post.title.rendered}</p>
-				</a>
-			</SwiperSlide>
-		{/each}
-	</Swiper>
-	<div id="all_article_link_box">
-		<a href="/blog/pages/1">全ての記事を見る</a>
+	<NewArticle {data} />
+
+	<div>
+		<ul id="category_box">
+			{#each categoryMap as category}
+				{#if category.count !== 0}
+					<li class="category_name">
+						<a href="/blog/category/{category.id}"
+							>{category.name}</a
+						>
+					</li>
+				{/if}
+			{/each}
+		</ul>
 	</div>
 </section>
 
 <style>
+	h1 {
+		position: relative;
+		padding: 0.25em 0;
+		text-shadow: 0 1px 0 #ccc, 0 3px 0 #ccc, 0 4px 10px rgba(0, 0, 0, 0.2);
+	}
+	h1:after {
+		content: "";
+		display: block;
+		height: 4px;
+		background: -webkit-linear-gradient(to right, #2196f3, transparent);
+		background: linear-gradient(to right, #2196f3, transparent);
+	}
 	.header_logo_box {
 		text-align: center;
 		padding: 50px 0;
 	}
-	.header_logo_box img{
+	.header_logo_box img {
 		max-width: 100%;
 	}
-	#all_article_link_box {
-		text-align: right;
+	ul#category_box {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
 	}
-	.swiper-slide a {
-		position: relative;
+	ul#category_box li.category_name {
+		list-style: none;
+		width: 30%;
+		text-align: center;
+		margin: 10px 0;
+		padding: 10px 0;
+		border: #61d800 solid 2px;
+		transition: 0.5s;
 	}
-	.swiper_link {
-		position: relative;
-		width: inherit;
+
+	ul#category_box li.category_name:hover {
+		transition: 0.5s;
+		background-color: #61d800;
 	}
-	.swiper_img {
-		width: inherit;
+
+	ul#category_box li.category_name a {
+		text-decoration: none;
+		color: #61d800;
+		transition: 0.5s;
 	}
-	.img_on_title {
-		color: black;
-		font-size: 18px;
-		text-shadow: 1px;
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		width: inherit;
-		text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
-			1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
-			1px 0 0 #fff;
+
+	ul#category_box li.category_name:hover a {
+		color: #ffffff;
+		transition: 0.5s;
 	}
 </style>
