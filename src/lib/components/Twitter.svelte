@@ -11,4 +11,4 @@
     
 </script>
 
-<a class="twitter-timeline" href="https://twitter.com/{twitterID}?ref_src=twsrc%5Etfw" data-width="300">Tweets by pike45587221</a>
+<a class="twitter-timeline" href="https://twitter.com/{twitterID}?ref_src=twsrc%5Etfw" data-height="400" data-lang="ja" data-width="300">Tweets by pike45587221</a>

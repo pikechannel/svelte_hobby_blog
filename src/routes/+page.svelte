@@ -1,7 +1,7 @@
 <script>
 	import logo from "$lib/images/header_logo.png";
 	import NewArticle from "$lib/components/NewArticle.svelte";
-	import Twitter from "$lib/components/Twitter.svelte";
+    import Sidebar from "$lib/components/Sidebar.svelte";
 
 	export let data;
 	const categoryMap = data.categories;
@@ -18,6 +18,9 @@
 
 	categoryMap.sort(compare);
 	const title = import.meta.env.VITE_TITLE;
+
+	const posts = data.post;
+
 </script>
 
 <svelte:head>
@@ -46,7 +49,24 @@
 			{/each}
 		</ul>
 	</div>
-	<Twitter />
+	<div
+		class="flexbox"
+		style="padding: 20px 5%;justify-content: space-between;"
+	>
+		<!-- コンテンツ（メイン）エリア -->
+		<div id="main_area">
+			<ul>
+				{#each posts as post}
+					<li>{post.title.rendered}</li>
+				{/each}
+			</ul>
+		</div>
+
+		<!-- サイドバー -->
+		<div id="side_area">
+			<Sidebar />
+		</div>
+	</div>
 </section>
 
 <style>
@@ -98,5 +118,17 @@
 	ul#category_box li.category_name:hover a {
 		color: #ffffff;
 		transition: 0.5s;
+	}
+
+	.flexbox {
+		display: flex;
+	}
+
+	#main_area {
+		width: calc(100% - 300px);
+	}
+
+	#side_area {
+		width: 300px;
 	}
 </style>
