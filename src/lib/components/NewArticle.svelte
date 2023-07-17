@@ -1,61 +1,70 @@
 <script>
-    // import Swiper core and required modules
-    import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper";
+    import { onMount } from "svelte";
+    import Swiper from "swiper";
 
-    import { Swiper, SwiperSlide } from "swiper/svelte";
-
-    // Import Swiper styles
-    import "swiper/css";
-    import "swiper/css/navigation";
-    import "swiper/css/pagination";
-    import "swiper/css/scrollbar";
-    import "swiper/css/autoplay";
-
-    // Import Swiper styles
-    import "swiper/css";
+    import {
+        Navigation,
+        Pagination,
+        Scrollbar,
+        A11y,
+        Autoplay,
+    } from "swiper/modules";
 
     export let data;
     const posts = data.post;
+
+    onMount(() => {
+        const swiper = new Swiper(".swiper", {
+            modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
+            spaceBetween: 10,
+            slidesPerView: 5,
+            navigation: true,
+            autoplay: true,
+            loop: true,
+            pagination: {
+                clickable: true,
+            },
+            scrollbar: {
+                draggable: true,
+            },
+            breakpoints: {
+                1280: {
+                    slidesPerView: 5,
+                },
+                960: {
+                    slidesPerView: 4,
+                },
+                640: {
+                    slidesPerView: 3,
+                },
+                320: {
+                    slidesPerView: 2,
+                },
+            },
+        });
+    });
 </script>
 
-<Swiper
-    modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-    spaceBetween={10}
-    slidesPerView={5}
-    navigation
-    autoplay
-    loop
-    pagination={{ clickable: true }}
-    scrollbar={{ draggable: true }}
-    breakpoints={{
-        1280: {
-            slidesPerView: 5,
-        },
-        960: {
-            slidesPerView: 4,
-        },
-        640: {
-            slidesPerView: 3,
-        },
-        320: {
-            slidesPerView: 2,
-        },
-    }}
->
-    {#each posts as post}
-        <SwiperSlide>
-            <a href="/blog/posts/{post.id}" class="swiper_link">
-                <img
-                    src={post.jetpack_featured_media_url}
-                    alt=""
-                    height="200px"
-                    class="swiper_img"
-                />
-                <p class="img_on_title">{post.title.rendered}</p>
-            </a>
-        </SwiperSlide>
-    {/each}
-</Swiper>
+<swiper-container>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            {#each posts as post}
+                <div class="swiper-slide">
+                    <a href="/blog/posts/{post.id}" class="swiper_link">
+                        <img
+                            src={post.jetpack_featured_media_url}
+                            alt=""
+                            height="200px"
+                            class="swiper_img"
+                        />
+                        <p class="img_on_title">{post.title.rendered}</p>
+                    </a>
+                </div>
+            {/each}
+        </div>
+    </div>
+</swiper-container>
+
 <div id="all_article_link_box">
     <a href="/blog/pages/1">全ての記事を見る</a>
 </div>
