@@ -10,6 +10,9 @@
         Autoplay,
     } from "swiper/modules";
 
+    // import styles bundle
+    import "swiper/css/bundle";
+
     export let data;
     const posts = data.post;
 
