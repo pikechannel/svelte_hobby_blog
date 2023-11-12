@@ -1,27 +1,41 @@
 <script>
+    import Sidebar from "$lib/components/Sidebar.svelte";
+    import TocList from "$lib/components/TocList.svelte";
+
     export let data = [];
 
-    const title = data.post.title.rendered;
+    const title = data.post.title.rendered.replace("&#8230;", "...");
     const contents = data.post.content.rendered;
-    const thumbnailURL = data.post.jetpack_featured_media_url;
+    const thumbnail = data.post.yoast_head_json.og_image[0].url;
+
 </script>
 
 <svelte:head>
     {@html data.post.yoast_head}
 </svelte:head>
 
-<div id="post_box">
-    <div id="article">
-        <h1>{title}</h1>
 
-        <section>
-            {@html contents}
-        </section>
-    </div>
-    <aside>
-        サイドメニュー
-    </aside>
+<div class="flexbox">
+	<div id="main_area">
+        <picture>
+            <source srcset="{thumbnail}">
+        </picture>
+		<div id="post_box">
+            <div id="article">
+                <h1>{title}</h1>
+                <section>
+                    {@html contents}
+                </section>
+            </div>
+        </div>
+	</div>
+
+	<!-- サイドバー -->
+	<aside id="side_area">
+		<Sidebar />
+	</aside>
 </div>
+
 
 <style>
     div#post_box {
@@ -40,8 +54,7 @@
     div#article {
         width: 70%;
     }
-
-    aside {
-        width: 30%
+    .wp-block-image img {
+        width: 100%;
     }
 </style>

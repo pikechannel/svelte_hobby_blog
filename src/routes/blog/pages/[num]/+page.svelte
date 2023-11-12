@@ -6,6 +6,9 @@
 	export let data;
 	const posts = data.post;
 	const nowPagesNum = data.nowPagesNum;
+	const queries = data.queries;
+
+	const pagePath = "/blog/pages/"
 
 	const pages = data.page;
 
@@ -42,7 +45,7 @@
 			/>
 		{/each}
 	</div>
-	<Pagination {pages} {nowPagesNum} />
+	<Pagination {pages} {nowPagesNum} {pagePath} {queries} />
 </section>
 
 <style>

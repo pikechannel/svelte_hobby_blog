@@ -8,19 +8,11 @@
 	const categories = data.categories;
 </script>
 
-<div class="app">
-	<Header {categories} />
-
-	<main>
-		<slot />
-	</main>
-
-	<Footer />
-</div>
+<Header {categories} />
+<main>
+	<slot />
+</main>
+<Footer />
 
 <style>
-	main {
-		width: 90%;
-		margin: 0 auto;
-	}
 </style>

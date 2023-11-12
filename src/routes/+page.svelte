@@ -1,7 +1,8 @@
 <script>
 	import logo from "$lib/images/header_logo.png";
 	import NewArticle from "$lib/components/NewArticle.svelte";
-    import Sidebar from "$lib/components/Sidebar.svelte";
+	import Sidebar from "$lib/components/Sidebar.svelte";
+	import CategoryList from "$lib/components/CategoryList.svelte";
 
 	export let data;
 	const categoryMap = data.categories;
@@ -21,6 +22,7 @@
 
 	const posts = data.post;
 
+	console.log(posts);
 </script>
 
 <svelte:head>
@@ -32,46 +34,58 @@
 	<img src={logo} alt="" />
 </div>
 
-<section>
-	<h1>新着記事</h1>
-	<NewArticle {data} />
+<h1>新着記事</h1>
+<NewArticle {data} />
 
-	<div>
-		<ul id="category_box">
-			{#each categoryMap as category}
-				{#if category.count !== 0}
-					<li class="category_name">
-						<a href="/blog/category/{category.id}"
-							>{category.name}</a
-						>
-					</li>
-				{/if}
+<div class="flexbox">
+	<div id="main_area">
+		<div id="">
+			{#each posts as post}
+				<div class="article">
+					<a href="/blog/posts/{post.id}">
+						<div class="flexbox">
+							<picture>
+								<source
+									class="article_img"
+									src={post.yoast_head_json.og_image[0].url}
+								/>
+								<img
+									class="article_img"
+									src={post.yoast_head_json.og_image[0].url}
+									alt=""
+								/>
+							</picture>
+							<div class="article_content">
+								<div class="post_title">
+									{post.title.rendered}
+								</div>
+								<div class="">
+									{post.yoast_head_json.og_description.substring(
+										0,
+										50
+									)}
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
 			{/each}
-		</ul>
-	</div>
-	<div
-		class="flexbox"
-		style="padding: 20px 5%;justify-content: space-between;"
-	>
-		<!-- コンテンツ（メイン）エリア -->
-		<div id="main_area">
-			<ul>
-				{#each posts as post}
-					<li>{post.title.rendered}</li>
-				{/each}
-			</ul>
 		</div>
+		<div class="article_all_button">
+			<a href="/blog/pages/">記事一覧</a>
+		</div>
+		<CategoryList {categoryMap} />
+	</div>
 
-		<!-- サイドバー -->
-		<div id="side_area">
-			<Sidebar />
-		</div>
-	</div>
-</section>
+	<!-- サイドバー -->
+	<aside id="side_area">
+		<Sidebar />
+	</aside>
+</div>
 
 <style>
 	h1 {
-		position: relative;
+		font-size: 2em;
 		padding: 0.25em 0;
 		text-shadow: 0 1px 0 #ccc, 0 3px 0 #ccc, 0 4px 10px rgba(0, 0, 0, 0.2);
 	}
@@ -89,46 +103,46 @@
 	.header_logo_box img {
 		max-width: 100%;
 	}
-	ul#category_box {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-around;
+	.article_img {
+		width: 250px;
+		height: 150px;
+		object-fit: cover;
 	}
-	ul#category_box li.category_name {
-		list-style: none;
-		width: 30%;
+	.article {
+		padding: 10px;
+		margin: 20px 0px;
+	}
+	.article:hover {
+		background-color: #d9e5ff;
+	}
+	.post_title {
+		margin-bottom: 15px;
+		font-weight: bold;
+	}
+	.article_content {
+		margin-left: 10px;
+	}
+	.article_all_button {
 		text-align: center;
-		margin: 10px 0;
-		padding: 10px 0;
-		border: #61d800 solid 2px;
-		transition: 0.5s;
-	}
-
-	ul#category_box li.category_name:hover {
-		transition: 0.5s;
-		background-color: #61d800;
-	}
-
-	ul#category_box li.category_name a {
-		text-decoration: none;
-		color: #61d800;
-		transition: 0.5s;
-	}
-
-	ul#category_box li.category_name:hover a {
-		color: #ffffff;
-		transition: 0.5s;
-	}
-
-	.flexbox {
+		width: 100%;
 		display: flex;
 	}
-
-	#main_area {
-		width: calc(100% - 300px);
+	.article_all_button a {
+		background-color: #61d800;
+		color: white;
+		border-radius: 100px;
+		display: inline;
+		margin: auto;
+		padding: 20px 40px;
+		font-size: 20px;
 	}
 
-	#side_area {
-		width: 300px;
+	@media screen and (max-width: 640px) {
+		#side_area, .article_img {
+			display: none;
+		}
+		#main_area {
+			width: 100%;
+		}
 	}
 </style>

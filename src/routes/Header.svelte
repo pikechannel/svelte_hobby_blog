@@ -34,7 +34,6 @@
 		});
 		cm["children"] = childCategories;
 	});
-
 </script>
 
 <header>
@@ -46,23 +45,31 @@
 			{#each categoryMap as category}
 				<li
 					class:active={$page.url.pathname ===
-						"/blog/category/" + category.id}
+						"/blog/pages/1/?categories=" + category.id}
 					class="top_menu"
 				>
-					<a data-sveltekit-reload href="/blog/category/{category.id}"
+				{#if category.children.length <= 0}
+					<a
+						data-sveltekit-reload
+						href="/blog/pages/1/?categories={category.id}"
 						>{category.name}</a
 					>
+				{/if}
 					{#if category.children.length > 0}
+					<span
+						>{category.name}</span
+					>
 						<ul id="sub_menu_list">
 							{#each category.children as children}
 								<li
 									class:active={$page.url.pathname ===
-										"/blog/category/" + children.id}
+										"/blog/pages/1/?categories=" +
+											children.id}
 									class="sub_menu"
 								>
 									<a
 										data-sveltekit-reload
-										href="/blog/category/{children.id}"
+										href="/blog/pages/1/?categories={children.id}"
 										>{children.name}</a
 									>
 								</li>
@@ -127,7 +134,8 @@
 		position: relative;
 	}
 
-	ul#top_menu_list li.top_menu a {
+	ul#top_menu_list li.top_menu a,
+	ul#top_menu_list li.top_menu span {
 		text-decoration: none;
 		color: var(--color-text);
 		font-family: "Solitreo", cursive;
