@@ -82,6 +82,7 @@
     }
     #all_article_link_box {
         text-align: right;
+        padding: 10px;
     }
 
     #all_article_link_box a {
