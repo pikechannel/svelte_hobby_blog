@@ -63,7 +63,7 @@
 									{post.yoast_head_json.og_description.substring(
 										0,
 										50
-									)}
+									).replace(/\s+/g, "")}
 								</div>
 							</div>
 						</div>

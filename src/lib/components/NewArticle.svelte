@@ -68,10 +68,6 @@
     </div>
 </swiper-container>
 
-<div id="all_article_link_box">
-    <a href="/blog/pages/1">全ての記事を見る</a>
-</div>
-
 <style>
     .header_logo_box {
         text-align: center;
@@ -79,19 +75,6 @@
     }
     .header_logo_box img {
         max-width: 100%;
-    }
-    #all_article_link_box {
-        text-align: right;
-        padding: 10px;
-    }
-
-    #all_article_link_box a {
-        text-decoration: none;
-        color: black;
-    }
-
-    #all_article_link_box a:hover {
-        font-weight: bold;
     }
 
     .swiper-slide a {
@@ -116,5 +99,9 @@
         text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
             1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
             1px 0 0 #fff;
+    }
+
+    .swiper {
+        margin-bottom: 20px;
     }
 </style>

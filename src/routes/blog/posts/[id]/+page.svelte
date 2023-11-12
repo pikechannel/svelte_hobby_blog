@@ -1,6 +1,7 @@
 <script>
     import Sidebar from "$lib/components/Sidebar.svelte";
     import TocList from "$lib/components/TocList.svelte";
+    import BreadcrumbList from "$lib/components/BreadcrumbList.svelte";
 
     export let data = [];
 
@@ -8,40 +9,51 @@
     const contents = data.post.content.rendered;
     const thumbnail = data.post.yoast_head_json.og_image[0].url;
 
+    const breadcrumbList = [
+        {
+            name: "HOME",
+            path: "/",
+        },
+        {
+            name: "ブログ",
+            path: "/blog/pages/1",
+        },
+        {
+            name: title,
+            path: "",
+        },
+    ];
 </script>
 
 <svelte:head>
     {@html data.post.yoast_head}
 </svelte:head>
 
-
+<BreadcrumbList {breadcrumbList} />
 <div class="flexbox">
-	<div id="main_area">
-        <picture>
-            <source srcset="{thumbnail}">
-        </picture>
-		<div id="post_box">
-            <div id="article">
-                <h1>{title}</h1>
-                <section>
-                    {@html contents}
-                </section>
-            </div>
+    <div id="post_box">
+        <div id="article">
+            <h1>{title}</h1>
+            <picture>
+                <source srcset={thumbnail} />
+                <img src={thumbnail} alt="" />
+            </picture>
+            <section
+                style="letter-spacing: 5px;line-height: 30px;margin-top:40px;"
+            >
+                {@html contents}
+            </section>
         </div>
-	</div>
+    </div>
 
-	<!-- サイドバー -->
-	<aside id="side_area">
-		<Sidebar />
-	</aside>
+    <!-- サイドバー -->
+    <aside id="side_area">
+        <Sidebar />
+    </aside>
 </div>
-
 
 <style>
     div#post_box {
-        max-width: 960px;
-        margin: 0 auto;
-        display: flex;
     }
 
     div#post_box img {
@@ -50,11 +62,13 @@
     div.wp-block-image figure {
         text-align: center;
     }
-
-    div#article {
-        width: 70%;
-    }
     .wp-block-image img {
         width: 100%;
+    }
+
+    @media screen and (max-width: 640px) {
+        #side_area {
+            display: none;
+        }
     }
 </style>
