@@ -4,6 +4,9 @@
 <script>
 	export let pages;
 	export let nowPagesNum;
+	export let pagePath;
+	export let queries;
+	
 	const pageList = [...Array(Number(pages))].map((_, i) => i + 1);
 
 	const pageCount = pageList.length;
@@ -15,13 +18,13 @@
 			<ul class="pagination">
 				{#if Number(nowPagesNum) - 1 > 0}
 					<li class="button">
-						<a data-sveltekit-reload  href="/blog/pages/{Number(nowPagesNum) - 1}">Prev</a>
+						<a data-sveltekit-reload  href="{pagePath}{Number(nowPagesNum) - 1}{queries}">Prev</a>
 					</li>
 				{/if}
 				{#each pageList as num, i}
 					{#if Number(nowPagesNum) == num}
 						<li>
-							<a class="current" href="/blog/pages/{num}">{num}</a
+							<a class="current" href="{pagePath}{num}{queries}">{num}</a
 							>
 						</li>
 					{/if}
@@ -30,13 +33,13 @@
 							<a
 								data-sveltekit-reload
 								class=""
-								href="/blog/pages/{num}">{num}</a
+								href="{pagePath}{num}{queries}">{num}</a
 							>
 						</li>
 					{/if}
 				{/each}
 				{#if Number(nowPagesNum) + 1 < pageCount}
-					<li class="button"><a data-sveltekit-reload href="/blog/pages/{Number(nowPagesNum) + 1}">Next</a></li>
+					<li class="button"><a data-sveltekit-reload href="{pagePath}{Number(nowPagesNum) + 1}{queries}">Next</a></li>
 				{/if}
 			</ul>
 		</nav>
