@@ -16,6 +16,9 @@
 </nav>
 
 <style>
+    nav {
+        padding: 20px;
+    }
     .breadcrumb {
         display: flex;
         flex-wrap: wrap;
